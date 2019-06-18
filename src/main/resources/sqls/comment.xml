@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="comment">
+ 
+ 	<select id="totalCount" parameterType="int" resultType="int">
+		select 
+			count(*)
+		from 
+			BOARD_COMMENT
+		where 
+			BOARD_NO = #{board_no}
+	</select>
+	
+	<select id="list" parameterType="int" resultType="BoardCommentDto">
+		select 
+			BOARD_COMMENT_NO, 
+			BOARD_NO, 
+			BOARD_COMMENT_GROUP, 
+			USER_ID, 
+			BOARD_COMMENT_CONTENT, 
+			BOARD_COMMENT_REGDATE
+		from 
+			BOARD_COMMENT
+		WHERE 
+			BOARD_NO = #{board_no}
+		order by 
+			BOARD_COMMENT_NO
+	</select>
+	
+	<select id="detail" parameterType="int" resultType="BoardCommentDto">
+		select 
+			BOARD_COMMENT_NO, 
+			BOARD_NO, 
+			BOARD_COMMENT_GROUP, 
+			USER_ID, 
+			BOARD_COMMENT_CONTENT, 
+			BOARD_COMMENT_REGDATE
+		from 
+			BOARD_COMMENT
+		WHERE 
+			BOARD_COMMENT_NO = #{board_comment_no}
+	</select>
+ 	
+	<insert id="insert" parameterType="BoardCommentDto">
+		<selectKey keyProperty="board_comment_no" resultType="int" order="BEFORE">
+			select 
+				BOARD_COMMENT_SEQ.NEXTVAL 
+			from 
+				DUAL
+		</selectKey>
+		insert into BOARD_COMMENT 
+		values(
+			#{board_comment_no}, 
+			#{board_no}, 
+			#{board_comment_group}, 
+			#{user_id}, 
+			#{board_comment_content}, 
+			SYSDATE 
+		)
+	</insert>
+	
+	<update id="update" parameterType="BoardCommentDto">
+		update 
+			BOARD_COMMENT
+		set 
+			BOARD_COMMENT_CONTENT = #{board_comment_content}
+		where 
+			BOARD_COMMENT_NO = #{board_comment_no}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete 
+			BOARD_COMMENT
+		where 
+			BOARD_COMMENT_NO = #{board_comment_no}
+	</delete>
+	
+	<delete id="deleteList" parameterType="int">
+		delete 
+			BOARD_COMMENT
+		where 
+			BOARD_NO = #{board_no}
+	</delete>
+	
+</mapper>
