@@ -9,7 +9,7 @@ public interface BoardDao {
 	
 	String BOARD = "board.";
 	
-	public int totalCount();
+	public int totalCount(String category);
 	
 	public int viewCount(int board_no);
 	

@@ -16,8 +16,8 @@ public class BoardDao_impl implements BoardDao{
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public int totalCount() {
-		return sqlSession.selectOne(BOARD+"totalCount");
+	public int totalCount(String category) {
+		return sqlSession.selectOne(BOARD+"totalCount", category);
 	}
 	
 	@Override

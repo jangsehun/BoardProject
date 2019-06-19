@@ -23,8 +23,8 @@ public class BoardBiz_impl implements BoardBiz{
 	private CommentDao commentDao;
 	
 	@Override
-	public int getBoardTotalCount() {
-		return boardDao.totalCount();
+	public int getBoardTotalCount(String category) {
+		return boardDao.totalCount(category);
 	}
 
 	@Override

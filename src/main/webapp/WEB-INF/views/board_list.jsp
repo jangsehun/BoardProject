@@ -32,10 +32,10 @@
 		
 			<thead>
 				<tr>
-					<td><b>번호</b></td> 
-					<td><b>제목</b></td> 
-					<td align="right"><b>작성자</b></td>
-					<td align="right"><b>작성 날짜</b></td> 
+					<td class="col-md-2"><b>번호</b></td> 
+					<td class="col-md-3"><b>제목</b></td> 
+					<td class="col-md-6" align="right"><b>작성자</b></td>
+					<td class="col-md-1" align="right"><b>작성 날짜</b></td> 
 				</tr>
 			</thead>
 			

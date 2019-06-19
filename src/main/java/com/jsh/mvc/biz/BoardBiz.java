@@ -7,7 +7,7 @@ import com.jsh.mvc.dto.BoardDto;
 
 public interface BoardBiz {
 	//pagination에 필요한 totalcount
-	public int getBoardTotalCount();
+	public int getBoardTotalCount(String category);
 	
 	//게시판 관련
 	public List<BoardDto> getBoardList(int page, int countList, String category);

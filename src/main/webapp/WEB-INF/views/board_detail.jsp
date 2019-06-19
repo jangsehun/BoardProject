@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="/WEB-INF/views/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -32,42 +33,69 @@ function comment_insert(){
 			user_id : $("#board_comment_user_id").val(),
 			board_comment_content : $("#board_comment_content").val()
 	}
-	//alert(JSON.stringify(boardCommentDto)); 오브젝트 내용 확인
 	
 	$.ajax({
-		url:"/board_comment_insert",
+		url:"/comment/insert",
 		type:"post",
 		data: boardCommentDto, 
 		success:function(boardCommentDto){
-			//기존에 댓글이 없었다면 댓글이 없었다는 표시를 위한 엘리먼트 삭제
+			
 			if($("#noComments").length){
 				$("#noComments").remove();
 			}
-			alert(boardCommentDto.board_comment_regDate);
-			
-			var _date = new Date();
-			
-			_date.setDate(boardCommentDto.board_comment_regDate);
-			
-			alert(_date);
 			
 			$("#board_comment_content").val("");
-			$("#comment_list").append("<li class='list-group-item'><span>"+boardCommentDto.user_id+"</span><span class='text-muted'> | <small>"+boardCommentDto.board_comment_regDate+"</small></span>"+
+			$("#comment_list").append("<li class='list-group-item'><span>"+boardCommentDto.user_id+"</span><span class='text-muted'> | <small>"+uxin_timestamp(boardCommentDto.board_comment_regDate)+"</small></span>"+
 										"<div style='white-space : pre-wrap;height: 100%'>"+boardCommentDto.board_comment_content+"</div></li>");
-            	/* $("#cleint_no").append("<ontion value='"+value.client_no+"'>");
-            	$("tbody").append(
-					"<tr>"+
-						"<td>"+value.client_name+"</th>"+
-						"<td>"+value.menu_title+"</th>"+
-						"<td>"+value.menu_price+"</th>"+
-					"</tr>"
-				); */
 		},
 		error:function(request,status,error){
 			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		}
 	});
 	return false;
+}
+
+function comment_list(){
+	
+	var board_no = { 
+			board_no : $("#board_comment_board_no").val() 
+	}
+	
+	$.ajax({
+		url:"/comment/list",
+		type:"post",
+		data: board_no, 
+		
+		success:function(resultMap){
+			
+			if(!$("#noComments").length){
+				$("#comment_list").empty();
+			}
+			
+			values = resultMap.commentList;
+			
+			$.each(values, function(index, value) {
+				$("#board_comment_content").val("");	
+				$("#comment_list").append("<li class='list-group-item'><span>"+value.user_id+"</span><span class='text-muted'> | <small>"+uxin_timestamp(value.board_comment_regDate)+"</small></span>"+
+											"<div style='white-space : pre-wrap;height: 100%'>"+value.board_comment_content+"</div></li>");
+			});
+		},
+		error:function(request,status,error){
+			alert("code:"+request.status+"\n\n"+"message:"+request.responseText+"\n\n"+"error:"+error);
+		}
+	});
+	return false;
+}
+
+function uxin_timestamp(time){
+	var date = new Date(time);
+	var year = date.getFullYear();
+	var month = "0" + (date.getMonth()+1);
+	var day = "0" + date.getDate();
+	var hour = "0" + date.getHours();
+	var minute = "0" + date.getMinutes();
+	//var second = "0" + date.getSeconds();
+	return year + "-" + month.substr(-2) + "-" + day.substr(-2) + " " + hour.substr(-2) + ":" + minute.substr(-2);
 }
 </script>
 <body>
@@ -87,7 +115,7 @@ function comment_insert(){
 					
 					<div class="row" >
 						<div class="col-md-4" style="float: left">
-							<span>${boardDto.board_writer } | <small><fmt:formatDate pattern="yy-MM-dd HH:mm" value="${boardDto.board_regDate }"/></small></span>
+							<span>${boardDto.board_writer } |</span> <span><small><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${boardDto.board_regDate }"/></small></span>
 						</div>
 						<div style="float: right">
 							<span class="text-muted"><small>조회 ${boardDto.board_views } | 댓글 [  ] | 추천 [  ]</small></span>
@@ -123,14 +151,15 @@ function comment_insert(){
 			  		<input id="board_comment_board_no" type="hidden" name="board_no" value="${boardDto.board_no }">
 			  		<input id="board_comment_user_id" type="hidden" name="user_id" value="tester">
 			  		<textarea id="board_comment_content" name="board_comment_content" class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="3" maxlength="1000" placeholder="댓글을 입력해주세요."></textarea>
+			  		<input type="button" class="pull-left btn btn-primary" value="새로고침" onclick="comment_list();">
 			  		<input type="submit" class="pull-right btn btn-primary" value="작성">
 			  	<br>
 			  	</form>
 			</div>
-			<hr>
-			<div>
-				
 			
+			<hr>
+			
+			<div>
 				<ul class="list-group" id="comment_list">
 					<c:choose>
 						<c:when test="${empty boardComment_list}">
@@ -140,8 +169,8 @@ function comment_insert(){
 						</c:when>
 						
 						<c:otherwise>
-							<c:forEach items="${boardComment_list }" var="boardCommentDto">
-								<li class="list-group-item"><span>${ boardCommentDto.user_id}</span><span class="text-muted"> | <small>${ boardCommentDto.board_comment_regDate}</small></span>
+							<c:forEach items="${boardComment_list }" var="boardCommentDto">										
+								<li class="list-group-item"><span>${ boardCommentDto.user_id}</span><span class="text-muted"> | <small><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${boardCommentDto.board_comment_regDate}"/></small></span>
 									<div class="" style="white-space : pre-wrap;height: 100%">${ boardCommentDto.board_comment_content}</div>
 								</li>
 							</c:forEach>		

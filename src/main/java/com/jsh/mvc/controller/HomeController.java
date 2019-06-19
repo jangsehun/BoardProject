@@ -1,6 +1,8 @@
 package com.jsh.mvc.controller;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,8 +28,8 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/board/{category}")
-	public String board_list(Model model, @PathVariable String category , @RequestParam(defaultValue="1")int page ) {
-		int totalCount = boardBiz.getBoardTotalCount();
+	public String board_list(Model model, @PathVariable String category, @RequestParam(defaultValue="1")int page ) {
+		int totalCount = boardBiz.getBoardTotalCount(category);
 		Pagination pagination = new Pagination(totalCount, page);
 		int countList = pagination.getCountList();
 		
@@ -89,9 +91,18 @@ public class HomeController {
 		return "redirect:/board/"+category+"/"+board_no;
 	}
 	
-	@RequestMapping("/board_comment_insert")
+	@RequestMapping("/comment/insert")
 	public @ResponseBody BoardCommentDto comment_insert(BoardCommentDto boardCommentDto) {
+		
 		return boardBiz.getBoardCommentDetail(boardBiz.boardCommentInsert(boardCommentDto));
+	}
+	
+	@RequestMapping("/comment/list")
+	public @ResponseBody Object comment_list(int board_no){
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("commentList",  boardBiz.getBoardCommentList(board_no));
+		return resultMap;
 	}
 	
 }
