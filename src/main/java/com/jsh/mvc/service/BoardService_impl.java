@@ -1,4 +1,4 @@
-package com.jsh.mvc.biz;
+package com.jsh.mvc.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +14,7 @@ import com.jsh.mvc.dto.BoardCommentDto;
 import com.jsh.mvc.dto.BoardDto;
 
 @Service
-public class BoardBiz_impl implements BoardBiz{
+public class BoardService_impl implements BoardService{
 	
 	@Autowired
 	private BoardDao boardDao;
@@ -36,7 +36,6 @@ public class BoardBiz_impl implements BoardBiz{
 		return boardDao.list(paramMap);
 	}
 	
-	@Transactional
 	@Override
 	public BoardDto getBoardDetail(int board_no) {
 		boardDao.viewCount(board_no);
@@ -90,11 +89,13 @@ public class BoardBiz_impl implements BoardBiz{
 		return commentDao.insert(boardCommentDto);
 	}
 
+	@Transactional
 	@Override
 	public int boardCommentUpdate(BoardCommentDto boardCommentDto) {
 		return commentDao.update(boardCommentDto);
 	}
 
+	@Transactional
 	@Override
 	public boolean boardCommentDelete(int board_comment_no) {
 		int resultCommentDelete = commentDao.delete(board_comment_no);

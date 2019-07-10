@@ -1,11 +1,11 @@
-package com.jsh.mvc.biz;
+package com.jsh.mvc.service;
 
 import java.util.List;
 
 import com.jsh.mvc.dto.BoardCommentDto;
 import com.jsh.mvc.dto.BoardDto;
 
-public interface BoardBiz {
+public interface BoardService {
 	//pagination에 필요한 totalcount
 	public int getBoardTotalCount(String category);
 	

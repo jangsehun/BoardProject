@@ -14,6 +14,7 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 	
+	<context:component-scan base-package="com.jsh.mvc" />
 	
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
@@ -24,10 +25,13 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.jsh.mvc" />
+	<view-controller path="/" view-name="index"/>
+	
+	
 	
 	
 	<resources location="/resources/" mapping="resources/**"></resources>
 	
 	<aop:aspectj-autoproxy/>
+	
 </beans:beans>

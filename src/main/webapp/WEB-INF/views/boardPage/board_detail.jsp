@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ include file="/WEB-INF/views/header.jsp" %>
+<%@ include file="/WEB-INF/views/commonPage/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +35,7 @@ function comment_insert(){
 	}
 	
 	$.ajax({
-		url:"/comment/insert",
+		url:"/board/comment/insert",
 		type:"post",
 		data: boardCommentDto, 
 		success:function(boardCommentDto){
@@ -62,7 +62,7 @@ function comment_list(){
 	}
 	
 	$.ajax({
-		url:"/comment/list",
+		url:"/board/comment/list",
 		type:"post",
 		data: board_no, 
 		
@@ -97,6 +97,7 @@ function uxin_timestamp(time){
 	//var second = "0" + date.getSeconds();
 	return year + "-" + month.substr(-2) + "-" + day.substr(-2) + " " + hour.substr(-2) + ":" + minute.substr(-2);
 }
+
 </script>
 <body>
 <input type="hidden" name="category" id="category" value="${boardDto.board_category }">
@@ -118,7 +119,7 @@ function uxin_timestamp(time){
 							<span>${boardDto.board_writer } |</span> <span><small><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${boardDto.board_regDate }"/></small></span>
 						</div>
 						<div style="float: right">
-							<span class="text-muted"><small>조회 ${boardDto.board_views } | 댓글 [  ] | 추천 [  ]</small></span>
+							<span class="text-muted"><small>조회 ${boardDto.board_views } | 댓글 ${fn:length(boardComment_list) } | 추천 [  ]</small></span>
 						</div>
 					</div>
 				
@@ -178,21 +179,7 @@ function uxin_timestamp(time){
 					</c:choose>
 				</ul>
 			</div>
-			
-			<!-- 
-			<table class="table">
-				<tr>
-					<td><div id="board_writer" class="form-control">${board_dto.board_writer }</div>
-				</tr>
-				<tr>
-					<td><div id="board_title" class="form-control">${board_dto.board_title }</div>
-				</tr>
-				
-				<tr>
-					<td><div id="board_content" class="form-control" style="white-space : pre-wrap;height: 100%">${board_dto.board_content }</div>
-				</tr>
-			</table>
-			 -->
+
 	</div>
 </div>
 
