@@ -4,14 +4,16 @@
 
 	<!-- 패키지.BoardDto클래스 까지 입력 -->
 	<typeAliases>
-		<typeAlias type="com.jsh.mvc.dto.BoardDto" alias="BoardDto"/>
-		<typeAlias type="com.jsh.mvc.dto.BoardCommentDto" alias="BoardCommentDto"/>
+		<typeAlias type="com.jsh.mvc.boardDto.BoardDto" alias="BoardDto"/>
+		<typeAlias type="com.jsh.mvc.boardDto.BoardCommentDto" alias="BoardCommentDto"/>
+		<typeAlias type="com.jsh.mvc.memberDto.MemberDto" alias="MemberDto"/>
 	</typeAliases>
 	
 	<!-- mapper의 위치를 잡아준다. -->
 	<mappers>
 		<mapper resource="/sqls/board.xml"/>
 		<mapper resource="/sqls/comment.xml"/>
+		<mapper resource="/sqls/member.xml"/>
 	</mappers>
 
 </configuration>

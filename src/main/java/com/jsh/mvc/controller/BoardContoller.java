@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jsh.mvc.dto.BoardCommentDto;
-import com.jsh.mvc.dto.BoardDto;
-import com.jsh.mvc.service.BoardService;
+import com.jsh.mvc.boardDto.BoardCommentDto;
+import com.jsh.mvc.boardDto.BoardDto;
+import com.jsh.mvc.boardService.BoardService;
 import com.jsh.mvc.util.Pagination;
 
 @Controller

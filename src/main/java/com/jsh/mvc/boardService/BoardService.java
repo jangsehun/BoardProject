@@ -1,9 +1,9 @@
-package com.jsh.mvc.service;
+package com.jsh.mvc.boardService;
 
 import java.util.List;
 
-import com.jsh.mvc.dto.BoardCommentDto;
-import com.jsh.mvc.dto.BoardDto;
+import com.jsh.mvc.boardDto.BoardCommentDto;
+import com.jsh.mvc.boardDto.BoardDto;
 
 public interface BoardService {
 	//pagination에 필요한 totalcount

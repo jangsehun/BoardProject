@@ -1,4 +1,4 @@
-package com.jsh.mvc.dao;
+package com.jsh.mvc.boardDao;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.jsh.mvc.dto.BoardCommentDto;
+import com.jsh.mvc.boardDto.BoardCommentDto;
 
 @Repository
 public class CommentDao_impl implements CommentDao{

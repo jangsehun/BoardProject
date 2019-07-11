@@ -1,4 +1,4 @@
-package com.jsh.mvc.dto;
+package com.jsh.mvc.boardDto;
 
 import java.sql.Date;
 

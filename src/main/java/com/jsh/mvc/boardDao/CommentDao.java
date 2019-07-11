@@ -1,8 +1,8 @@
-package com.jsh.mvc.dao;
+package com.jsh.mvc.boardDao;
 
 import java.util.List;
 
-import com.jsh.mvc.dto.BoardCommentDto;
+import com.jsh.mvc.boardDto.BoardCommentDto;
 
 public interface CommentDao {
 		String COMMENT = "comment.";

@@ -1,4 +1,4 @@
-package com.jsh.mvc.service;
+package com.jsh.mvc.boardService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jsh.mvc.dao.BoardDao;
-import com.jsh.mvc.dao.CommentDao;
-import com.jsh.mvc.dto.BoardCommentDto;
-import com.jsh.mvc.dto.BoardDto;
+import com.jsh.mvc.boardDao.BoardDao;
+import com.jsh.mvc.boardDao.CommentDao;
+import com.jsh.mvc.boardDto.BoardCommentDto;
+import com.jsh.mvc.boardDto.BoardDto;
 
 @Service
 public class BoardService_impl implements BoardService{

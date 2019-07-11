@@ -1,9 +1,9 @@
-package com.jsh.mvc.dao;
+package com.jsh.mvc.boardDao;
 
 import java.util.List;
 import java.util.Map;
 
-import com.jsh.mvc.dto.BoardDto;
+import com.jsh.mvc.boardDto.BoardDto;
 
 public interface BoardDao {
 	
