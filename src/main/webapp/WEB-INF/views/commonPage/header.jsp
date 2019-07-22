@@ -45,7 +45,7 @@ $(function(){
 	  </ul>
 	  <ul class="nav navbar-nav navbar-right">
 		<li class="button"><a href="/login">로그인 <span class="sr-only">(current)</span></a></li>
-		<li class="button"><a href="/user/register">회원가입 <span class="sr-only">(current)</span></a></li>
+		<li class="button"><a href="/register">회원가입 <span class="sr-only">(current)</span></a></li>
 	  </ul>
 	</div><!--/.nav-collapse -->
   </div>

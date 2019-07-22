@@ -27,7 +27,9 @@
 	
 	<view-controller path="/" view-name="index"/>
 	
+	<view-controller path="/login" view-name="memberPage/login"/>
 	
+	<view-controller path="/register" view-name="memberPage/register"/>
 	
 	
 	<resources location="/resources/" mapping="resources/**"></resources>
