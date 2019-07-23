@@ -1,5 +1,8 @@
 package com.jsh.mvc.memberService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,12 +33,22 @@ public class MemberService_impl implements MemberService{
 		//1. 비밀번호 암호화 
 		memberDto.setMember_pw(new LoginSecurityUtil().encryptPassword(memberDto.getMember_pw()));
 		//2. 회원가입(insert)
-		//memberDao.insert(memberDto);
+		memberDao.insert(memberDto);
+		
+		//---------------------------------------------------------------
+		//하나의 클래스로 만드는것도 괜찮을듯..인증 이메일 보내기전의 일련의 과정이기 때문에 
 		//3. 인증키 생성
 		String tempKey = new TempKey().getKey(64, false);
-		//4. 인증키 해당회원 DB에 저장
+		//4. 인증키 해당회원 DB에 저장 (map에 담에서 param으로 전달)
 		memberDto.setMember_authKey(tempKey);
-		//memberDao.updateAuthKey(memberDto);
+		
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("authKey", tempKey);
+		paramMap.put("member_email", memberDto.getMember_email());
+		
+		memberDao.updateAuthKey(paramMap);
+		//---------------------------------------------------------------
+		
 		//5. 인증이메일 발송
 		
 		//6. 이메일인증을 해달라는 페이지로 이동

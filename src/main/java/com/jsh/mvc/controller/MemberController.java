@@ -2,6 +2,7 @@ package com.jsh.mvc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jsh.mvc.memberDto.MemberDto;
@@ -15,7 +16,7 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@RequestMapping("/register")
-	public String register(MemberDto memberDto) throws Exception {
+	public String register(Model model, MemberDto memberDto) throws Exception {
 		System.out.println(memberDto.getMember_no());
 		System.out.println(memberDto.getMember_id());
 		System.out.println(memberDto.getMember_pw());
@@ -34,7 +35,9 @@ public class MemberController {
 		//DB에 암호화 후(pw) insert(회원가입)
 		
 		//이메일 발송 됬다는 페이지로 이동
-		return "memberPage/register";
+		
+		model.addAttribute("member_email", memberDto.getMember_email());
+		return "commonPage/sendEmail";
 	}
 	
 	@RequestMapping("/login")
