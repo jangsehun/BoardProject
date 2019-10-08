@@ -32,7 +32,10 @@ public class MemberService_impl implements MemberService{
 		*/
 		//1. 비밀번호 암호화 
 		memberDto.setMember_pw(new LoginSecurityUtil().encryptPassword(memberDto.getMember_pw()));
-		//2. 회원가입(insert)
+		//2. 이메일 인증키 생성
+		//String tempKey = new TempKey().getKey(64, false);
+		//memberDto.setMember_authKey(tempKey);
+		//3. 회원가입(insert)
 		memberDao.insert(memberDto);
 		
 		//---------------------------------------------------------------
@@ -41,10 +44,10 @@ public class MemberService_impl implements MemberService{
 		String tempKey = new TempKey().getKey(64, false);
 		//4. 인증키 해당회원 DB에 저장 (map에 담에서 param으로 전달)
 		memberDto.setMember_authKey(tempKey);
-		
+		//회원정보를 DB에 입력하기전에 인증키도 한번에 넣어서해주는것으로하자
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("authKey", tempKey);
-		paramMap.put("member_email", memberDto.getMember_email());
+		//paramMap.put("member_email", memberDto.getMember_email());
 		
 		memberDao.updateAuthKey(paramMap);
 		//---------------------------------------------------------------
